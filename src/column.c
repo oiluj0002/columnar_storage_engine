@@ -74,7 +74,7 @@ void column_destroy(struct column *col) {
  * Appends a single piece of raw binary data to the end of a column.
  * Returns 0 on success, -1 on failure.
  */
-static int column_add(struct column *col, void *src_ptr) {
+static int column_add(struct column *col, void *value) {
     size_t type_size = get_type_size(col->type);
     if (type_size == 0) {
         fprintf(stderr, "Unknown column type\n");
@@ -103,7 +103,7 @@ static int column_add(struct column *col, void *src_ptr) {
 
     unsigned char *target =
         (unsigned char *)col->data + (col->n_rows * type_size);
-    memcpy(target, src_ptr, type_size);
+    memcpy(target, value, type_size);
 
     col->n_rows++;
     return 0;
